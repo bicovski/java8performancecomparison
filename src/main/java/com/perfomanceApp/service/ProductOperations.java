@@ -50,5 +50,33 @@ public class ProductOperations {
         }
     }
 
+    public void streamCountToOneMillion(){
+         long count = Stream.iterate(0, n -> n + 1)
+                 .limit(1_000_000)
+                 .filter(ProductOperations::isPrime)
+                 .peek(x -> System.out.format("%s\t", x))
+                 .count();
+        System.out.println("\nTotal: " + count);
+
+    }
+
+    public void parallelStreamCountToOneMillion(){
+        long count = Stream.iterate(0, n -> n + 1)
+                .limit(1_000_000)
+                .parallel()
+                .filter(ProductOperations::isPrime)
+                .peek(x -> System.out.format("%s\t", x))
+                .count();
+        System.out.println("\nTotal: " + count);
+
+    }
+
+    public static boolean isPrime(int number) {
+        if (number <= 1) return false;
+        return !IntStream.rangeClosed(2, number / 2).anyMatch(i -> number % i == 0);
+    }
+
+
+
 
 }
