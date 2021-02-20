@@ -6,12 +6,14 @@ import com.perfomanceApp.model.Product;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ProductOperations {
 
     public void  calculateWithParallelStream(List<Product> productList , List<AbiProduct> abiProductList ){
           productList.parallelStream().filter(item -> item.getId() == 0).
-                forEach(item -> abiProductList.parallelStream()
+                forEach(item -> abiProductList.stream()
                         .filter(abiProduct -> abiProduct.getTitle().equals(item.getTitle()))
                         .forEach(value -> item.setId(value.getId())));
     }
